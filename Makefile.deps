@@ -1,0 +1,4 @@
+# DO NOT DELETE
+
+obj/main.o: /usr/include/unistd.h /usr/include/features.h
+obj/main.o: /usr/include/stdc-predef.h /usr/include/getopt.h
