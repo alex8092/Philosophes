@@ -14,7 +14,7 @@ else
 	CFLAGS += -O3
 endif
 
-LDFLAGS = -lphtread -lft -Llib -L../Lib/lib $(INCLUDES) -march=native
+LDFLAGS = -lpthread -lft -Llib -L../Lib/lib $(INCLUDES) -march=native
 
 SRCS = $(shell find src -name "*.c")
 

@@ -1,4 +1,14 @@
 # DO NOT DELETE
 
+obj/ft_create_philo.o: include/ft_philo.h /usr/include/pthread.h
+obj/ft_create_philo.o: /usr/include/features.h /usr/include/stdc-predef.h
+obj/ft_create_philo.o: /usr/include/endian.h /usr/include/sched.h
+obj/ft_create_philo.o: /usr/include/time.h ../Lib/include/ft_common.h
+obj/ft_create_philo.o: /usr/include/unistd.h /usr/include/getopt.h
+obj/ft_create_philo.o: /usr/include/stdlib.h /usr/include/alloca.h
 obj/main.o: /usr/include/unistd.h /usr/include/features.h
 obj/main.o: /usr/include/stdc-predef.h /usr/include/getopt.h
+obj/main.o: /usr/include/stdio.h /usr/include/libio.h
+obj/main.o: /usr/include/_G_config.h /usr/include/wchar.h include/ft_philo.h
+obj/main.o: /usr/include/pthread.h /usr/include/endian.h /usr/include/sched.h
+obj/main.o: /usr/include/time.h
