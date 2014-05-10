@@ -9,14 +9,14 @@ int		baguette_in_use(t_philo *phil)
 	int	ret;
 
 	ret = 0;
-	if (!phil->gauche.in_use && phil->last_action != 1 && phil->phil_gauche->life * 100 / MAX_LIFE > 50)
+	if (!phil->gauche.in_use && phil->last_action != 1 && (phil->phil_gauche->life * 100 / MAX_LIFE > 80 || phil->life * 100 / MAX_LIFE <= 80))
 	{
 		phil->bag1 = &phil->gauche;
 		phil->gauche.in_use = 1;
 		++ret;
 	}
 	printf("life : %d\n", phil->life * 100 / MAX_LIFE);
-	if (!phil->droite->in_use && phil->last_action != 2 && (phil->phil_droite->life * 100 / MAX_LIFE > 50 || phil->life * 100 / MAX_LIFE < 50))
+	if (!phil->droite->in_use && phil->last_action != 2 && (phil->phil_droite->life * 100 / MAX_LIFE > 80 || phil->life * 100 / MAX_LIFE <= 80))
 	{
 		if (phil->bag1)
 			phil->bag2 = phil->droite;
