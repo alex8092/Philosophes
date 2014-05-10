@@ -9,13 +9,14 @@ int		baguette_in_use(t_philo *phil)
 	int	ret;
 
 	ret = 0;
-	if (!phil->gauche.in_use)
+	if (!phil->gauche.in_use && phil->last_action != 1 && phil->phil_gauche->life * 100 / MAX_LIFE > 50)
 	{
 		phil->bag1 = &phil->gauche;
 		phil->gauche.in_use = 1;
 		++ret;
 	}
-	if (!phil->droite->in_use)
+	printf("life : %d\n", phil->life * 100 / MAX_LIFE);
+	if (!phil->droite->in_use && phil->last_action != 2 && (phil->phil_droite->life * 100 / MAX_LIFE > 50 || phil->life * 100 / MAX_LIFE < 50))
 	{
 		if (phil->bag1)
 			phil->bag2 = phil->droite;
@@ -59,17 +60,20 @@ void	*thread(void *data)
 				{
 					printf("phil(%d) thinking\n", phil->n);
 					phil->thinking = 1;
+					phil->last_action = 1;
 				}
 				else
 				{
 					printf("phil(%d) eating\n", phil->n);
 					phil->eating = 1;
+					phil->last_action = 2;
 				}
 			}
 			else
 			{
 				printf("phil(%d) sleeping\n", phil->n);
 				phil->sleeping = 1;
+				phil->last_action = 3;
 			}
 			pthread_mutex_unlock(&g_mut_status);
 		}
@@ -138,17 +142,28 @@ int		main(void)
 	time_t		beg;
 	time_t		end;
 	t_baguette	*last;
+	t_philo		*phil_last;
 
 	last = NULL;
+	phil_last = NULL;
 	pthread_mutex_init(&g_mut_status, NULL);
 	for (i = 0; i < 7; ++i)
 	{
 		phils[i] = ft_create_philo(last, i);
+		phils[i]->phil_droite = phil_last;
 		last = &phils[i]->gauche;
+		phil_last = phils[i];
+		if (i > 0)
+			phils[i - 1]->phil_gauche = phils[i];
 		if (i == 6)
+		{
 			phils[0]->droite = last;
-		pthread_create(&phils[i]->id, NULL, thread, (void *)phils[i]);
+			phils[0]->phil_droite = phil_last;
+			phils[i]->phil_gauche = phils[0];
+		}
 	}
+	for (i = 0; i < 7; ++i)
+		pthread_create(&phils[i]->id, NULL, thread, (void *)phils[i]);
 	phils_alive = 1;
 	beg = time(NULL);
 	while (1)
